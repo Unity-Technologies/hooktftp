@@ -20,17 +20,9 @@ var ShellHook = HookComponents{
 		}
 		err = cmd.Start()
 
-		// Use goroutine to log the exit status for debugging purposes.
-		// XXX: It probably is bad practice to access variables from multiple
-		// goroutines, but I hope it is ok in this case since the purpose is
-		// only to read and log the status. If not we must remove this bit.
-		// Please let me know if you know better.
-		go func() {
-			err := cmd.Wait()
-			if err != nil {
-				fmt.Printf("Command '%v' failed to execute: '%v'", command, err)
-			}
-		}()
+		if err != nil {
+			fmt.Printf("Command '%v' failed to execute: '%v'", command, err)
+		}
 
 		return stdout, err
 	},
